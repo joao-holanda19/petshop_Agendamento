@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop - Agendamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Agendamentos</h1>
+            <button id="logoutBtn">Sair</button>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" data-tab="list">Meus Agendamentos</button>
+            <button class="tab" data-tab="new">Novo Agendamento</button>
+        </div>
+        
+        <div id="listTab" class="tab-content active">
+            <div id="petsList"></div>
+        </div>
+        
+        <div id="newTab" class="tab-content">
+            <form id="petForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="petName">Nome do Pet:</label>
+                    <input type="text" id="petName" required>
+                </div>
+                <div class="form-group">
+                    <label for="breed">Raça:</label>
+                    <input type="text" id="breed" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDate">Data e Horário:</label>
+                    <input type="datetime-local" id="appointmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Observações:</label>
+                    <textarea id="notes"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="petImage">Foto do Pet:</label>
+                    <input type="file" id="petImage" accept="image/*" required>
+                    <div id="imagePreview"></div>
+                </div>
+                <button type="submit">Agendar</button>
+            </form>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
