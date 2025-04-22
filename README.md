@@ -56,7 +56,7 @@ petshop-system/
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seuusuario/petshop-system.git
+git clone https://github.com/joao-holanda19/petshop-system.git
 ```
 
 2. Acesse o diretório do backend:
@@ -104,7 +104,3 @@ npm run dev   # Inicia com Nodemon
 ## 📝 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-Desenvolvido com ❤️ para fins educacionais e profissionais.
