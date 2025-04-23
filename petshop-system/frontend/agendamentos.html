@@ -1,54 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetShop - Agendamentos</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Agendamentos - PetShop</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Agendamentos</h1>
-            <button id="logoutBtn">Sair</button>
-        </header>
-        
-        <div class="tabs">
-            <button class="tab active" data-tab="list">Meus Agendamentos</button>
-            <button class="tab" data-tab="new">Novo Agendamento</button>
-        </div>
-        
-        <div id="listTab" class="tab-content active">
-            <div id="petsList"></div>
-        </div>
-        
-        <div id="newTab" class="tab-content">
-            <form id="petForm" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="petName">Nome do Pet:</label>
-                    <input type="text" id="petName" required>
-                </div>
-                <div class="form-group">
-                    <label for="breed">Raça:</label>
-                    <input type="text" id="breed" required>
-                </div>
-                <div class="form-group">
-                    <label for="appointmentDate">Data e Horário:</label>
-                    <input type="datetime-local" id="appointmentDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Observações:</label>
-                    <textarea id="notes"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="petImage">Foto do Pet:</label>
-                    <input type="file" id="petImage" accept="image/*" required>
-                    <div id="imagePreview"></div>
-                </div>
-                <button type="submit">Agendar</button>
-            </form>
-        </div>
-    </div>
-    <script src="scripts.js"></script>
+  <div class="container">
+    <h1>Meus Agendamentos</h1>
+    <button onclick="logout()">Sair</button>
+
+    <h2>Novo Agendamento</h2>
+    <form id="petForm" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="petName">Nome do Pet:</label>
+        <input type="text" id="petName" required>
+      </div>
+      <div class="form-group">
+        <label for="breed">Raça:</label>
+        <input type="text" id="breed" required>
+      </div>
+      <div class="form-group">
+        <label for="appointmentDate">Data e Hora:</label>
+        <input type="datetime-local" id="appointmentDate" required>
+      </div>
+      <div class="form-group">
+        <label for="notes">Observações:</label>
+        <textarea id="notes"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="petImage">Imagem:</label>
+        <input type="file" id="petImage" accept="image/*">
+      </div>
+      <button type="submit">Agendar</button>
+    </form>
+
+    <h2>Agendamentos</h2>
+    <div id="petsList"></div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:3000/api";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("token");
+      if (!token) return window.location.href = "login.html";
+      loadPets();
+
+      document.getElementById("petForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("pet_name", document.getElementById("petName").value);
+        formData.append("breed", document.getElementById("breed").value);
+        formData.append("appointment_date", document.getElementById("appointmentDate").value);
+        formData.append("notes", document.getElementById("notes").value);
+        if (document.getElementById("petImage").files[0]) {
+          formData.append("image", document.getElementById("petImage").files[0]);
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/pets`, {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${token}` },
+            body: formData
+          });
+
+          if (res.ok) {
+            alert("Agendamento criado com sucesso!");
+            document.getElementById("petForm").reset();
+            loadPets();
+          } else {
+            const data = await res.json();
+            alert(data.error || "Erro ao agendar");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Erro ao conectar com o servidor.");
+        }
+      });
+    });
+
+    async function loadPets() {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch(`${API_BASE}/pets`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        const pets = await res.json();
+        const container = document.getElementById("petsList");
+        container.innerHTML = "";
+
+        pets.forEach(pet => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <strong>${pet.pet_name}</strong><br>
+            Raça: ${pet.breed}<br>
+            Data: ${new Date(pet.appointment_date).toLocaleString()}<br>
+            ${pet.notes ? `Notas: ${pet.notes}<br>` : ""}
+            ${pet.image_path ? `<img src="/${pet.image_path}" style="max-width:150px;">` : ""}
+            <hr>
+          `;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById("petsList").innerHTML = "Erro ao carregar agendamentos.";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
 </html>
