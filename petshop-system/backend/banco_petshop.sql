@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS petshop;
+
+USE petshop;
+
+CREATE TABLE IF NOT EXISTS Users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Pets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  pet_name VARCHAR(255),
+  breed VARCHAR(255),
+  appointment_date DATETIME,
+  notes TEXT,
+  image_path VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
+);

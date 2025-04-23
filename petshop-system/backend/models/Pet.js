@@ -1,26 +1,11 @@
-const Pet = require('../models/Pet');
-const fs = require('fs');
-const path = require('path');
+const { DataTypes } = require('sequelize');
 
-exports.createPet = async (req, res) => {
-    try {
-        const { pet_name, breed, appointment_date, notes } = req.body;
-        const imagePath = req.file ? req.file.path : null;
-        
-        const pet = new Pet({
-            user_id: req.userId,
-            pet_name,
-            breed,
-            appointment_date,
-            notes,
-            image_path: imagePath
-        });
-        
-        await pet.save();
-        res.status(201).json(pet);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+module.exports = (sequelize) => {
+  return sequelize.define('Pet', {
+    pet_name: DataTypes.STRING,
+    breed: DataTypes.STRING,
+    appointment_date: DataTypes.DATE,
+    notes: DataTypes.TEXT,
+    image_path: DataTypes.STRING
+  });
 };
-
-// Implement other CRUD operations similarly...
