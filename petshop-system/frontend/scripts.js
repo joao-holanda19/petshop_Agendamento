@@ -1,22 +1,22 @@
-// Global variables
+// Variáveis ​​globais
 let currentUser = null;
 const API_BASE_URL = 'http://localhost:3000/api';
 
-// DOM Content Loaded event
+// Evento de conteúdo DOM carregado
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if user is logged in
+    // Verifique se o usuário está logado
     const token = localStorage.getItem('token');
     if (token && !document.getElementById('loginForm')) {
         currentUser = parseJwt(token);
         loadPets();
     }
     
-    // Login form
+    // formulário de login
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
         
-        // Show password toggle
+        // Mostrar alternância de senha
         const showPasswordBtn = document.querySelector('.show-password');
         if (showPasswordBtn) {
             showPasswordBtn.addEventListener('click', function() {
@@ -32,14 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Registration form would be similar
+    // O formulário de inscrição seria semelhante
     
     // Pet form
     const petForm = document.getElementById('petForm');
     if (petForm) {
         petForm.addEventListener('submit', handlePetSubmit);
         
-        // Image preview
+        // Vizualização da imagem
         const petImageInput = document.getElementById('petImage');
         if (petImageInput) {
             petImageInput.addEventListener('change', function(e) {
@@ -62,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
         tab.addEventListener('click', function() {
             const tabId = this.getAttribute('data-tab');
             
-            // Update active tab
+            // Atualizar guia ativa
             tabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             
-            // Update active content
+            // Atualizar conteúdo ativo
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Helper function to parse JWT
+// Função auxiliar para analisar JWT
 function parseJwt(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -95,7 +95,7 @@ function parseJwt(token) {
     return JSON.parse(jsonPayload);
 }
 
-// Handle login
+// Lidar com o login
 async function handleLogin(e) {
     e.preventDefault();
     
@@ -125,7 +125,7 @@ async function handleLogin(e) {
     }
 }
 
-// Handle pet submission
+// Lidar com o envio de animais de estimação
 async function handlePetSubmit(e) {
     e.preventDefault();
     
@@ -163,7 +163,7 @@ async function handlePetSubmit(e) {
     }
 }
 
-// Load pets
+// Carregar pets
 async function loadPets() {
     try {
         const token = localStorage.getItem('token');
@@ -198,7 +198,7 @@ async function loadPets() {
                 </div>
             `).join('');
             
-            // Add event listeners to edit and delete buttons
+            // Adicionar ouvintes de eventos para editar e excluir botões
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', deletePet);
             });
@@ -215,7 +215,7 @@ async function loadPets() {
     }
 }
 
-// Delete pet
+// Deletar pet
 async function deletePet(e) {
     const petId = e.target.closest('.pet-card').getAttribute('data-id');
     
@@ -242,8 +242,8 @@ async function deletePet(e) {
     }
 }
 
-// Edit pet (similar to delete, but would populate the form)
+// Editar animal de estimação (semelhante a excluir, mas preencheria o formulário) e semelhante a excluir, mas preencheria o formulário
 async function editPet(e) {
-    // Implementation would be similar to delete but would populate the form
-    // with the pet data for editing
+    // A implementação seria semelhante à exclusão, mas preencheria o formulário
+    // com os dados do animal de estimação para edição
 }
