@@ -49,7 +49,6 @@ petshop-system/
 ### Pré-requisitos
 
 - Node.js e npm instalados
-- MongoDB em execução local ou em serviço na nuvem
 
 ### Passos
 
@@ -75,7 +74,6 @@ npm install
 
 ```
 PORT=3000
-DB_URL=mongodb://localhost:27017/petshop
 JWT_SECRET=sua_chave_super_segura
 ```
 
