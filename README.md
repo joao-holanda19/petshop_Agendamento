@@ -25,7 +25,7 @@ petshop-system/
 │   ├── .env
 │   └── package.json
 │
-├── banco_petshop.sql   # Script SQL (se necessário)
+├── banco_petshop.sql   # Script SQL
 └── README.md
 ```
 
@@ -39,7 +39,7 @@ petshop-system/
 - **Backend**
   - Node.js
   - Express
-  - MongoDB com Mongoose
+  - MySQL
   - JWT para autenticação
   - Bcrypt para hashing de senhas
   - Multer para upload de imagens
