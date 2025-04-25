@@ -12,6 +12,6 @@ module.exports = (sequelize) => {
       allowNull: false
     }
   }, {
-    timestamps: false  //desativa createdAt e updatedAt
+    timestamps: false  // desativa createdAt e updatedAt
   });
 };

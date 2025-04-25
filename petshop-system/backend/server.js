@@ -7,6 +7,8 @@ const authRoutes = require('./routes/authRoutes');
 const petRoutes = require('./routes/petRoutes');
 const { verifyToken } = require('./middleware/authMiddleware');
 
+app.use('/api/pets', verifyToken, petRoutes);
+
 const app = express();
 
 app.use(cors());
