@@ -6,7 +6,6 @@ exports.getAllPets = async (req, res) => {
     const pets = await Pet.findAll({ where: { user_id: req.userId } });
     res.json(pets);
   } catch (error) {
-    console.error('Erro ao buscar pets:', error);
+    console.error('Erro detalhado:', error); // Mostra o erro completo
     res.status(500).json({ error: error.message });
-  }
-};
+}};
