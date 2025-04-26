@@ -2,6 +2,10 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   return sequelize.define('Pet', {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     pet_name: {
       type: DataTypes.STRING,
       allowNull: false
