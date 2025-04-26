@@ -2,7 +2,7 @@ const { Pet } = require('../models');
 
 exports.getAllPets = async (req, res) => {
   try {
-    console.log('UserID recebido:', req.userId); // 👈 imprima no terminal
+    console.log('UserID recebido:', req.userId); // 👈 Log para verificar
     const pets = await Pet.findAll({
       where: { user_id: req.userId }
     });
