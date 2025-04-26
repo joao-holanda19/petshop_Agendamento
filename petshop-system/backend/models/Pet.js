@@ -25,6 +25,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING
     }
   }, {
+    tableName: 'Pets',
     timestamps: false
   });
 };
